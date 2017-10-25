@@ -1,5 +1,5 @@
 {
-  "name": "gulp-changed-sass",
+  "name": "gulp-cached-sass",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
