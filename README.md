@@ -1,34 +1,31 @@
 # gulp-cached-sass
 
-This module is wrap [gulp-cached](https://www.npmjs.com/package/gulp-cached).
+This module is used with [gulp-cached](https://www.npmjs.com/package/gulp-cached).
 
-Currently under development...
+Inspired by [gulpを使ってsassの@importを解決しつつ差分ビルドをする - Qiita](https://qiita.com/joe-re/items/542b3f6fdc577cf50509)
 
 ## What I want to do...
 
 ### Now
 ```js
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var cache = require('gulp-cached');
+const {src, dest} = require('gulp');
+const gulpSass = require('gulp-sass');
+const gulpCached = require('gulp-cached');
 
-gulp.task('develop', function(){
-    gulp.watch('./src/scss/**/*.scss', function(){
-        gulp.start('sass');
-    });
-});
+const sass = () => {
+    const srcPath = './src/scss/**/*.scss';
+    const destPath = './dest/css';
+    const gulpCachedName = 'sass';
+    return src(srcPath)
+        .pipe(gulpCached(gulpCachedName))
+        .pipe(gulpSass().on('error', gulpSass.logError))
+        .pipe(dest(destPath));
+};
 
-gulp.task('sass', function (callback) {
-    var path = {
-        src: './src/scss/**/*.scss',
-        dest: './dest'
-    };
-    gulp.src(path.src)
-        .pipe(cache('sass'))
-        .pipe(sass())
-        .pipe(gulp.dest(path.dest))
-        .on('end', callback);
-});
+const watchSass = () => watch('./src/scss/**/*.scss', sass);
+
+exports.default = series(sass, watchSass);
+exports.sass = sass;
 
 ```
 
@@ -57,28 +54,30 @@ I need run task runner, because updated @import file written to "style.scss".
 ### In the future I would like to do this
 
 ```js
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var cacheSass = require('gulp-cached-sass');
+const {src, dest} = require('gulp');
+const gulpSass = require('gulp-sass');
+const gulpCached = require('gulp-cached');
+const gulpCachedSass = require('gulp-cached-sass');
 
-gulp.task('develop', function(){
-    gulp.watch('./src/scss/**/*.scss', function(){
-        gulp.start('sass');
-    });
-});
+const sass = () => {
+    const srcPath = './src/scss/**/*.scss';
+    const destPath = './dest/css';
+    const gulpCachedName = 'sass';
+    const baseDir = './src/scss/';
+    return src(srcPath)
+        .pipe(gulpCached(gulpCachedName))
+        .pipe(gulpCachedSass(baseDir))
+        .pipe(gulpSass().on('error', gulpSass.logError))
+        .pipe(dest(destPath));
+};
 
-gulp.task('sass', function (callback) {
-    var path = {
-        src: './src/scss/**/*.scss',
-        dest: './dest'
-    };
-    gulp.src(path.src)
-        .pipe(cacheSass('sass'))
-        .pipe(sass())
-        .pipe(gulp.dest(path.dest))
-        .on('end', callback);
-});
+const watchSass = () => watch('./src/scss/**/*.scss', sass);
+
+exports.default = series(sass, watchSass);
+exports.sass = sass;
+
 
 ```
 
 if update `modules/_header.scss`, run gulp task & compile style.scss, and @import file written to any *.scss.
+
