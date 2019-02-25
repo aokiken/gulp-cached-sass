@@ -1,6 +1,6 @@
 {
   "name": "gulp-cached-sass",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,13 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "gulp-cached": "^1.1.1"
+    "gulp-cached": "^1.1.1",
+    "gulp-foreach": "^0.1.0",
+    "sass-graph": "^3.0.4",
+    "vinyl-fs": "^3.0.3"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-sass": "^4.0.2"
   }
 }
