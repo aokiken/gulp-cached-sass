@@ -11,7 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "gulp-cached": "^1.1.1",
-    "gulp-foreach": "^0.1.0",
+    "gulp-flatmap": "^1.0.2",
     "sass-graph": "^3.0.4",
     "vinyl-fs": "^3.0.3"
   },

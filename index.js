@@ -1,6 +1,6 @@
 'use strict';
 const {parseDir} = require('sass-graph');
-const gulpForEach = require('gulp-foreach');
+const gulpFlatmap = require('gulp-flatmap');
 const {src} = require('vinyl-fs');
 const PluginError = require('plugin-error');
 
@@ -26,7 +26,7 @@ const plugin = function (baseDir) {
             base: baseDir
         });
     };
-    return gulpForEach(getUpdateFile);
+    return gulpFlatmap(getUpdateFile);
 };
 
 module.exports = plugin;
